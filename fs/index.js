@@ -1,5 +1,6 @@
 var exec = require('child_process').exec
 var fs = require('fs');
+var path = require('path');
 
 // //读取文件（同步）
 // var data = fs.readFileSync('a.txt', 'utf-8');
@@ -49,3 +50,68 @@ fs.open('a.txt', 'a', function (err, fd) {
         })
     })
 })
+
+//通过Promise封装一个读取文件的操作
+function readFilePromise(fileName) {
+    return new Promise((resolve, reject) => {
+        fs.readFile(fileName, 'utf-8', (err, data) => {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(data.toString());
+            }
+        });
+    });
+}
+
+//参数传递
+function f2() {
+    const fullFileName = path.resolve(__dirname, 'data1.json')
+    const result = readFilePromise(fullFileName, 'utf-8');
+    result.then(data => {
+        console.log(data);
+        return JSON.parse(data).name;
+    }).then(name => {
+        console.log(name);
+    }).catch(err => {
+        console.log(err.stack);
+    })
+}
+// f2();
+
+//串联读取多个文件
+function f3() {
+    const fullFileName1 = path.resolve(__dirname, 'data1.json');
+    const fullFileName2 = path.resolve(__dirname, 'data2.json');
+    const result1 = readFilePromise(fullFileName1, 'utf-8');
+    const result2 = readFilePromise(fullFileName2, 'utf-8');
+
+    result2.then(data2 => {
+        console.log(data2);
+        return result1;
+    }).then(data1 => {
+        console.log(data1);
+    })
+}
+// f3();
+
+// Promise.all 和 Promise.race
+function fn4() {
+
+    const fullFileName2 = path.resolve(__dirname, 'data2.json')
+    const result2 = readFilePromise(fullFileName2)
+    const fullFileName1 = path.resolve(__dirname, 'data1.json')
+    const result1 = readFilePromise(fullFileName1)
+
+    Promise.all([result1, result2]).then(datas => {
+        console.log(datas[0])
+        console.log(datas[1])
+    })
+
+    Promise.race([result1, result2]).then(data => {
+        console.log(data)
+    })
+
+}
+// fn4();
+
