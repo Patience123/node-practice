@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+</head>
+
+<body>
+    <form action="http://www.baidu.com" method="post" onsubmit="tijiao()">
+        <input id="input" type="text" placeholder="请输入数字">
+    </form>
+
+    <script>
+        var input = document.getElementById('input');
+        var form = document.getElementsByTagName('form');
+        input.addEventListener('keyup', function (e) {
+            console.log(this.value);
+            if (e.keyCode === 13) {
+                tijiao();
+            }
+        });
+        function tijiao() {
+            alert('提交');
+        }
+
+        // 驼峰转换
+        function getlargeIndex(str) {
+            var largeIndexArr = [];
+            for (var i = 0; i < str.length; i++) {
+                if (/[A-Z]/.test(str[i])) {
+                    largeIndexArr.push(i);
+                }
+            }
+            return largeIndexArr;
+        }
+
+        function change(input) {
+            var inputArr = input.split('');
+            var indexList = getlargeIndex(input);
+            for (var j = 0; j < indexList.length; j++) {
+                if (indexList[j] != 0) {
+                    inputArr.splice(indexList[j], 0, "_");
+                    indexList = getlargeIndex(inputArr);
+                }
+            }
+            var result = inputArr.join('').toLowerCase();
+            return result;
+        }
+
+        console.log(change('HelloWorldIAmWangSheng'));
+
+    </script>
+</body>
+
+</html>
