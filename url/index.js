@@ -26,7 +26,7 @@ let urlObj = {
 }
 console.log(url.format(urlObj));  // http://www.baidu.com:8080/course/list/index.html?name=sheng&&id=12#floor1
 
-// url.parse()
+// url.resolve()
 console.log(url.resolve('/one/two/three', 'four'));         // '/one/two/four'
 console.log(url.resolve('http://example.com/', '/one'));    // 'http://example.com/one'
 console.log(url.resolve('http://example.com/one', '/two')); // 'http://example.com/two'

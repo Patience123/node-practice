@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>搜索</title>
+</head>
+<body>
+    <input type="text" id="search">
+    <script>
+        var search = document.getElementById('search');
+        search.addEventListener('keyup', function() {
+            debounce(function() {
+                console.log('You are searching' + search.value);
+            }, 2000)
+        });
+
+        // your code
+        var timeoutId;
+        function debounce(fn, delay) {
+            if(timeoutId) {
+                clearTimeout(timeoutId);
+            }
+            timeoutId = setTimeout(fn, delay);
+        }
+    </script>
+</body>
+</html>
